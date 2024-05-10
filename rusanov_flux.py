@@ -3,19 +3,6 @@ import numpy as np
 def getFlux(rho_L, rho_R, vx_L, vx_R, vy_L, vy_R, P_L, P_R, gamma):
   """
   Calculate fluxed between 2 states with local Lax-Friedrichs/Rusanov rule 
-  rho_L        is a matrix of left-state  density
-  rho_R        is a matrix of right-state density
-  vx_L         is a matrix of left-state  x-velocity
-  vx_R         is a matrix of right-state x-velocity
-  vy_L         is a matrix of left-state  y-velocity
-  vy_R         is a matrix of right-state y-velocity
-  P_L          is a matrix of left-state  pressure
-  P_R          is a matrix of right-state pressure
-  gamma        is the ideal gas gamma
-  flux_Mass    is the matrix of mass fluxes
-  flux_Momx    is the matrix of x-momentum fluxes
-  flux_Momy    is the matrix of y-momentum fluxes
-  flux_Energy  is the matrix of energy fluxes
   """
   
   # left and right energies
@@ -52,11 +39,6 @@ def getFlux(rho_L, rho_R, vx_L, vx_R, vy_L, vy_R, P_L, P_R, gamma):
 def applyFluxes(F, flux_F_X, flux_F_Y, dx, dt):
   """
   Apply fluxes to conserved variables
-  F        is a matrix of the conserved variable field
-  flux_F_X is a matrix of the x-dir fluxes
-  flux_F_Y is a matrix of the y-dir fluxes
-  dx       is the cell size
-  dt       is the timestep
   """
   # directions for np.roll() 
   R = -1   # right

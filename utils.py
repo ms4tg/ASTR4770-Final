@@ -4,16 +4,6 @@ import rusanov_flux as flux
 def getConserved( rho, vx, vy, P, gamma, vol):
   """
   Calculate the conserved variable from the primitive
-  rho      is matrix of cell densities
-  vx       is matrix of cell x-velocity
-  vy       is matrix of cell y-velocity
-  P        is matrix of cell pressures
-  gamma    is ideal gas gamma
-  vol      is cell volume
-  Mass     is matrix of mass in cells
-  Momx     is matrix of x-momentum in cells
-  Momy     is matrix of y-momentum in cells
-  Energy   is matrix of energy in cells
   """
   Mass   = rho * vol
   Momx   = rho * vx * vol
@@ -25,16 +15,6 @@ def getConserved( rho, vx, vy, P, gamma, vol):
 def getPrimitive( Mass, Momx, Momy, Energy, gamma, vol, ghostCell = False ):
   """
   Calculate the primitive variable from the conservative
-  Mass     is matrix of mass in cells
-  Momx     is matrix of x-momentum in cells
-  Momy     is matrix of y-momentum in cells
-  Energy   is matrix of energy in cells
-  gamma    is ideal gas gamma
-  vol      is cell volume
-  rho      is matrix of cell densities
-  vx       is matrix of cell x-velocity
-  vy       is matrix of cell y-velocity
-  P        is matrix of cell pressures
   """
   rho = Mass / vol
   vx  = Momx / rho / vol
@@ -49,10 +29,6 @@ def getPrimitive( Mass, Momx, Momy, Energy, gamma, vol, ghostCell = False ):
 def getGradient(f, dx, ghostCell = False):
   """
   Calculate the gradients of a field
-  f        is a matrix of the field
-  dx       is the cell size
-  f_dx     is a matrix of derivative of f in the x-direction
-  f_dy     is a matrix of derivative of f in the y-direction
   """
   # directions for np.roll() 
   R = -1   # right
@@ -69,14 +45,6 @@ def getGradient(f, dx, ghostCell = False):
 def extrapolateInSpaceToFace(f, f_dx, f_dy, dx):
   """
   Calculate the gradients of a field
-  f        is a matrix of the field
-  f_dx     is a matrix of the field x-derivatives
-  f_dy     is a matrix of the field y-derivatives
-  dx       is the cell size
-  f_XL     is a matrix of spatial-extrapolated values on `left' face along x-axis 
-  f_XR     is a matrix of spatial-extrapolated values on `right' face along x-axis 
-  f_YR     is a matrix of spatial-extrapolated values on `left' face along y-axis 
-  f_YR     is a matrix of spatial-extrapolated values on `right' face along y-axis 
   """
   # directions for np.roll() 
   R = -1   # right
@@ -95,10 +63,6 @@ def extrapolateInSpaceToFace(f, f_dx, f_dy, dx):
 def addGhostCells( rho, vx, vy, P ):
 	"""
     Add ghost cells to the top and bottom
-	rho      is matrix of cell densities
-	vx       is matrix of cell x-velocity
-	vy       is matrix of cell y-velocity
-	P        is matrix of cell pressures
 	"""
 	rho = np.hstack((rho[:,0:1], rho, rho[:,-1:]))
 	vx  = np.hstack(( vx[:,0:1],  vx,  vx[:,-1:]))
@@ -110,10 +74,6 @@ def addGhostCells( rho, vx, vy, P ):
 def setGhostCells( rho, vx, vy, P ):
 	"""
     Set ghost cells at the top and bottom
-	rho      is matrix of cell densities
-	vx       is matrix of cell x-velocity
-	vy       is matrix of cell y-velocity
-	P        is matrix of cell pressures
 	"""
 	
 	rho[:,0]  = rho[:,1]
@@ -131,8 +91,6 @@ def setGhostCells( rho, vx, vy, P ):
 def setGhostGradients( f_dx, f_dy ):
 	"""
     Set ghost cell y-gradients at the top and bottom to be reflections
-	f_dx     is a matrix of derivative of f in the x-direction
-	f_dy     is a matrix of derivative of f in the y-direction
 	"""
 	
 	f_dy[:,0]  = -f_dy[:,1]  
@@ -143,13 +101,6 @@ def setGhostGradients( f_dx, f_dy ):
 def addSourceTerm( Mass, Momx, Momy, Energy, g, dt ):
 	"""
     Add gravitational source term to conservative variables
-	Mass     is matrix of mass in cells
-	Momx     is matrix of x-momentum in cells
-	Momy     is matrix of y-momentum in cells
-	Energy   is matrix of energy in cells
-	g        is strength of gravity
-	Y        is matrix of y positions of cells
-	dt       is timestep to progress solution
 	"""
 	
 	Energy += dt * Momy * g
