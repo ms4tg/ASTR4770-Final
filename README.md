@@ -29,6 +29,6 @@ This module contains all the utility functions needed for computation, including
 
 This module contains the functions necessary to approximate the flux using the Rusanov flux method, which is crucial for simulating the fluid dynamics.
 
-### `test1.mp4`, `test2.mp4`
+### `test1.mp4, test2.mp4`
 
 Those two mp4 files are sample video simulations generated for the two tests mentioned above. 
